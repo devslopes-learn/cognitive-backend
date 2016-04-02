@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 var bodyParser = require('body-parser');
 var app = express();
 
@@ -10,39 +11,22 @@ app.all('/*', function(req, res, next) {
   next();
 });
 
+app.use(express.static(path.join(__dirname + '/public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-var ingredients = [
-    {
-        "id": "234kjw",
-        "text": "Eggs"
-    },
-    {
-        "id": "as82w",
-        "text": "Milk"
-    },
-    {
-        "id": "234sk1",
-        "text": "Bacon"
-    },
-    {
-        "id": "ppo3j3",
-        "text": "Frog Legs"
-    }
+var persons = [
+    "person1.jpg",
+    "person2.jpg",
+    "person3.jpg",
+    "person4.jpg",
+    "person5.jpg",
+    "person6.png"
 ];
 
-
-app.get('/ingredients', function(req, res) {
+app.get('/persons', function(req, res) {
     console.log("GET From SERVER");
-    res.send(ingredients);
-});
-
-app.post('/ingredients', function(req, res) {
-    var ingredient = req.body;
-    console.log(req.body);
-    ingredients.push(ingredient);
-    res.status(200).send("Successfully posted ingredient");
+    res.send(persons);
 });
 
 app.listen(6069);
